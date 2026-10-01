@@ -80,3 +80,97 @@ These modules will be expanded as the project development progresses.
 Initial Python development environment and project structure have been configured.
 
 Automated tests are configured using pytest.
+
+## Day 5 – Resume Text Extraction Engine
+
+The Day 5 module provides the base resume text extraction pipeline for Zecpath AI.
+
+### Extraction Pipeline
+
+Resume File
+    |
+    +---- PDF ------> PyMuPDF
+    |
+    +---- DOCX -----> python-docx
+                       |
+                       v
+                  Raw Text
+                       |
+                       v
+                 Text Cleaner
+                       |
+                       v
+                 Cleaned Text
+                       |
+                       v
+                  JSON Output
+
+### Supported Formats
+
+- PDF
+- DOCX
+
+### Features
+
+- Extract text from PDF resumes using PyMuPDF
+- Extract text from DOCX resumes using python-docx
+- Read DOCX paragraphs and table content
+- Normalize bullet characters
+- Normalize common resume section headings
+- Clean excessive whitespace
+- Preserve raw extracted text
+- Store raw and cleaned text in JSON format
+- Automated pytest tests
+
+### Running the Resume Extraction Engine
+
+Run:
+
+    python main.py
+
+Enter the path to a resume when prompted.
+
+Example:
+
+    data/sample_resumes/sample_resume.pdf
+
+The extracted result is saved inside:
+
+    outputs/
+
+Example output:
+
+    outputs/sample_resume_extracted.json
+
+### Testing
+
+Run the complete test suite:
+
+    pytest
+
+Current test result:
+
+    7 passed
+
+Test results are also stored in:
+
+    test_results.log
+
+### Day 5 Project Structure
+
+    parsers/
+    |-- pdf_parser.py
+    |-- docx_parser.py
+    |-- text_cleaner.py
+    `-- resume_extractor.py
+
+    utils/
+    `-- file_handler.py
+
+    tests/
+    |-- test_basic.py
+    |-- test_pdf_parser.py
+    |-- test_docx_parser.py
+    |-- test_resume_extractor.py
+    |-- test_file_handler.py
+    `-- test_scoring.py
