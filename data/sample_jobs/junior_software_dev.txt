@@ -1,0 +1,12 @@
+Company Description AmsikaTechBotz (Amsika) specializes in designing, building, and managing intelligent automation systems that replace repetitive manual business operations. The company delivers solutions across document and invoice processing, workflow automation, system and CRM integration, email and communication automation, HR and onboarding, and healthcare operations. Amsika works with both custom build-and-deploy models and fully managed services, adapting to each client’s technical infrastructure and preferences. Team members help organizations reduce operational costs, improve data accuracy, and free staff to focus on high-value growth activities.
+Role Description The Junior Software Engineer role at AmsikaTechBotz is a full-time, hybrid position based in kottayam City. This role involves assisting in the design, development, testing, and maintenance of backend services and automation solutions that streamline clients’ business processes. The engineer will implement features under the guidance of senior engineers, write clean and efficient code, debug issues, and participate in code reviews. Day-to-day responsibilities include collaborating with cross-functional teams to understand automation requirements, integrating systems and APIs, documenting technical work, and contributing to continuous improvement of existing tools and workflows. The role also includes learning and applying best practices in software engineering, security, and performance optimization.
+Qualifications
+0-1 years of experience (2025-26 Pass Out)
+Strong foundational knowledge in Computer Science, including data structures, algorithms, and software engineering principles.
+Practical skills in Software Development and Programming, with experience in at least one modern programming language (e.g., Python, Java, C#, or JavaScript).
+Understanding of Back-End Web Development, including APIs, databases, and server-side frameworks.
+Familiarity with Object-Oriented Programming (OOP) concepts and their application in building scalable, maintainable systems.
+Bachelor’s degree (or equivalent) in Computer Science, Information Technology, or a related field.
+Ability to learn new technologies quickly, follow coding standards, and work effectively within a collaborative engineering team.
+Basic experience with version control (e.g., Git) and software development lifecycle practices.
+Good analytical, problem-solving, and communication skills; prior internship or project experience in automation or integration is a plus.

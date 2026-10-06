@@ -1,0 +1,24 @@
+Python Developer
+
+We are looking for a Python Developer to join our engineering team.
+
+Required Skills:
+Python
+Django
+REST API
+PostgreSQL
+
+Preferred Skills:
+Docker
+AWS
+
+Experience:
+2+ years of experience in backend development.
+
+Education:
+Bachelor's degree in Computer Science or MCA.
+
+Responsibilities:
+Develop and maintain backend applications.
+Build REST APIs.
+Work with databases and development teams.

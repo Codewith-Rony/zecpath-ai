@@ -1,0 +1,40 @@
+{
+    "job_id": "JOB-001",
+    "title": "Python Developer",
+    "description": "Python Developer\n\nWe are looking for a Python Developer to join our engineering team.\n\nRequired Skills:\nPython\nDjango\nREST API\nPostgreSQL\n\nPreferred Skills:\nDocker\nAWS\n\nExperience:\n2+ years of experience in backend development.\n\nEducation:\nBachelor's degree in Computer Science or MCA.\n\nResponsibilities:\nDevelop and maintain backend applications.\nBuild REST APIs.\nWork with databases and development teams.",
+    "experience_requirement": {
+        "minimum_years": 2,
+        "maximum_years": null
+    },
+    "required_skills": [
+        "Python",
+        "Django",
+        "REST API",
+        "PostgreSQL"
+    ],
+    "preferred_skills": [
+        "C",
+        "Docker",
+        "AWS"
+    ],
+    "education_requirements": [
+        "Bachelor's Degree",
+        "MCA",
+        "Computer Science"
+    ],
+    "responsibilities": [
+        "Develop and maintain backend applications.",
+        "Build REST APIs.",
+        "Work with databases and development teams."
+    ],
+    "qualifications": [],
+    "certifications": [],
+    "employment": {
+        "type": null,
+        "work_mode": null,
+        "location": {
+            "city": null,
+            "country": null
+        }
+    }
+}

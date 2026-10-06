@@ -1,0 +1,49 @@
+{
+    "job_id": "JOB-001",
+    "title": "Full Stack Developer",
+    "description": "Full Stack Developer\n\nExperience: 3+ years\nType: Contract\nWork Mode: Work from Office\n\nJob Overview\n\nWe are looking for a skilled Full Stack Developer with 3+ years of experience in building scalable web applications using React.js, Node.js, and PostgreSQL as optional. \n\nThe candidate should be comfortable working across both frontend and backend and have good experience in developing REST APIs and integrating databases.\n\nKey Responsibilities\n\n· Develop responsive and scalable web applications using React.js.\n· Build and maintain backend services and REST APIs using Node.js.\n· Design, develop, and optimize PostgreSQL databases, queries and stored procedures.\n· Integrate frontend applications with backend APIs and third-party services.\n· Write clean, reusable and maintainable code.\n· Perform unit testing, debugging, and performance optimization.\n· Participate in code reviews and follow development best practices.\n· Work closely with product, QA, and other engineering teams to deliver features.\n· Troubleshoot production issues and provide timely fixes.\n· Contribute to technical design and implementation discussions.\n\nRequired Skills\n\n· 3+ years of hands-on experience in Full Stack Development.\n· Strong experience with React.js, JavaScript and TypeScript.\n· Good experience with Node.js and backend development.\n· Strong knowledge of REST APIs and API integration.\n· Hands-on experience with PostgreSQL or SQL.\n· Understanding of frontend performance, responsive design, and browser compatibility.\n· Good understanding of Git and source control.\n· Experience with Agile/Scrum development practices.\n· Good problem-solving and communication skills.",
+    "experience_requirement": {
+        "minimum_years": 3,
+        "maximum_years": null
+    },
+    "required_skills": [
+        "JavaScript",
+        "TypeScript",
+        "React",
+        "Node.js",
+        "REST API",
+        "PostgreSQL",
+        "Git"
+    ],
+    "preferred_skills": [
+        "JavaScript",
+        "React",
+        "Node.js",
+        "PostgreSQL"
+    ],
+    "education_requirements": [
+        "B.E."
+    ],
+    "responsibilities": [
+        "· Develop responsive and scalable web applications using React.js.",
+        "· Build and maintain backend services and REST APIs using Node.js.",
+        "· Design, develop, and optimize PostgreSQL databases, queries and stored procedures.",
+        "· Integrate frontend applications with backend APIs and third-party services.",
+        "· Write clean, reusable and maintainable code.",
+        "· Perform unit testing, debugging, and performance optimization.",
+        "· Participate in code reviews and follow development best practices.",
+        "· Work closely with product, QA, and other engineering teams to deliver features.",
+        "· Troubleshoot production issues and provide timely fixes.",
+        "· Contribute to technical design and implementation discussions."
+    ],
+    "qualifications": [],
+    "certifications": [],
+    "employment": {
+        "type": "contract",
+        "work_mode": "work from office",
+        "location": {
+            "city": null,
+            "country": null
+        }
+    }
+}

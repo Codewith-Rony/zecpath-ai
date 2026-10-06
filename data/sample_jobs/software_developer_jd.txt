@@ -1,0 +1,54 @@
+Salary: ₹10 lakh–₹25 lakh per year
+
+Experience: Fresh graduates to 4 years
+
+Location: Bengaluru
+
+Work arrangement: Full-time, work from office
+
+About Our Products
+
+AlgoUniversity builds technology-led learning products that help ambitious students become strong software engineers.
+
+Our founding team includes Olympiad medalists, ACM-ICPC World Finalists, and alumni of IIT Bombay and IIIT Hyderabad, with engineering experience at companies such as Google and Apple.
+
+You’ll build products for AlgoUniversity and Tensor School - including AI agents, coding-agent harnesses, learning systems, and end-to-end platforms with products ranging from launching stage to 1M users.
+
+What You’ll Build
+
+AI agents and harnesses for software-development and learning agents
+End-to-end products across frontend, backend, APIs, and infrastructure
+Tools that use coding agents to improve how software is built and how students learn
+Reliable production systems used by a large and growing learner community
+New product capabilities directly alongside the CTO
+
+Your First 60 Days
+
+First 30 days: Work directly with the CTO to launch the next version of our AI-agent harness to 1 lakh users.
+
+By 60 days: Scale the harness, improve its reliability, and expand what it can do alongside the CTO.
+
+What We’re Looking For
+
+Fresh graduate or up to 2 years of software-development experience
+Strong software-engineering fundamentals
+Experience building full-stack projects or products
+Familiarity with Python, JavaScript, Docker, Azure, or AWS
+Practical experience using coding agents such as Codex or Claude Code
+Ability to take a problem from idea to working production software
+Comfort learning quickly and working across different parts of the stack
+
+The Strongest Application
+
+Show us not tell - something you have built.
+
+A deployed product, AI agent, open-source contribution, or SERIOUS side project is the quickest way to demonstrate your ability.
+
+Tell us what you built, why you built it, and which parts you owned.
+
+Engineering Perks
+
+Access to the latest AI models, coding agents, and developer tools
+Company-provided unlimited token access for engineering work
+Freedom to experiment with new models and agentic workflows
+Direct experience building production-grade AI-agent systems
