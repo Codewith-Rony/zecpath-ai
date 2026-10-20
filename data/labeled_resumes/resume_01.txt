@@ -1,0 +1,30 @@
+SUMMARY
+Software Engineer with experience in web development.
+
+CONTACT
+Rony Thomas
+rony@example.com
++91 9876543210
+
+SKILLS
+Python
+JavaScript
+MongoDB
+Git
+
+WORK EXPERIENCE
+Web Developer Intern
+ABC Technologies
+2025 - Present
+
+EDUCATION
+B.Tech Information Technology
+XYZ College
+2022 - 2026
+
+PROJECTS
+Zecpath AI
+Travel Website
+
+CERTIFICATIONS
+Python Certification

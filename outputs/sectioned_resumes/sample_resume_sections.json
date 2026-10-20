@@ -1,0 +1,26 @@
+{
+    "file_name": "sample_resume.pdf",
+    "file_type": ".pdf",
+    "sections": {
+        "summary": [
+            "SUMMARY\nSoftware Engineer with hands-on experience in developing and deploying full-stack web applications through\ninternships and real-world client projects. Proficient in JavaScript, PHP, Python, MySQL, MongoDB, and modern web\ntechnologies, with a strong foundation in software engineering principles, database management, and responsive web\ndevelopment. Eager to contribute to scalable software solutions while continuously learning modern technologies."
+        ],
+        "contact": [
+            "RONY THOMAS\nThekkel (H), Mundakayam, Kerala | 8590934207 | ronythomasthekkel@gmail.com\nLinkedIn | GitHub | Portfolio"
+        ],
+        "skills": [
+            "SKILLS\nHTML5, CSS3, JavaScript, PHP, Node.js, MySQL, MongoDB, Python, Flask, Git, Java, C, NumPy, Pandas"
+        ],
+        "work_experience": [
+            "EXPERIENCE\nTOTAMANIC MARKETING SOLUTIONS\nKottayam, Kerala\nWeb Developer Intern\nFebruary 2025 – October 2025\n-\nDeveloped and deployed two production-ready client websites using HTML, CSS, JavaScript, and responsive\nweb design principles.\n-\nOptimized website performance, SEO, and mobile responsiveness to improve user experience across devices.\nUNIQUE WORLD ROBOTICS\nKottayam, Kerala\nAI & ML Intern\nJune 17, 2025 – June 21, 2025\n-\nBuilt a machine learning-based Traffic Prediction System using Python and scikit-learn.\n-\nPerformed data preprocessing, feature engineering, model training, and evaluation on real-world datasets.\n-\nDeveloped a Flask-based web interface for real-time traffic predictions.\nLEOPARD TECH LABS\nKottayam, Kerala\nFlutter Developer Intern\nJune 2024 – July 2024\n-\nBuilt and refined front-end screens using Flutter and Dart for a cross-platform mobile app\n-\nIntegrated Firebase Authentication and Firestore, ensuring real-time data sync and performance across devices"
+        ],
+        "education": [
+            "EDUCATION\nAmal Jyothi College of Engineering (Autonomous), APJAKTU\nKottayam, Kerala\nBachelor of Technology (B.Tech) in Information Technology | CGPA: 7.3\n2022 – 2026\nC Kesavan Memorial HSS, Kerala State Board\nKottayam, Kerala\nHigher Secondary Education | Percentage: 93.5%\n2020 - 2022\nSt. George Public School, CBSE\nKottayam, Kerala\nHigh School Education | Percentage: 93.6%\n2008 - 2020"
+        ],
+        "certifications": [],
+        "projects": [
+            "PROJECTS\nEvent Registration & Management Portal (stepone.jyteenskerala.org)\nTools: HTML, CSS, JavaScript, PHP, MySQL\n-\nDeveloped a production-ready event registration and management portal using PHP, MySQL, HTML, CSS,\nand JavaScript.\n-\nImplemented secure participant registration, authentication, and an administrative dashboard for managing\nregistrations and event data.\n-\nSuccessfully deployed the application for real-world event management.\nAppointment Booking System\nTools: HTML, CSS, JavaScript, MongoDB\n-\nBuilt a full-stack appointment booking system with authentication and scheduling functionality.\n-\nDesigned MongoDB collections and optimized CRUD operations for efficient data management.\n-\nDeveloped an administrative approval workflow for managing appointments.\nFact-Based Comparison of News Articles\nTools: Python, Web Scraping, NLP, SBERT, NLI-BERT\n-\nDeveloped an AI-powered system for extracting and comparing factual information from news articles across\nmultiple media sources.\n-\nApplied web scraping, NLP, SBERT embeddings, and NLI models to identify common, contradictory, and\nomitted facts.\n-\nImproved factual comparison accuracy through semantic similarity and contradiction detection techniques."
+        ],
+        "other": []
+    }
+}
