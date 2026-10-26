@@ -1,0 +1,53 @@
+
+{
+  "technical": {
+    "Python": ["python", "py"],
+    "Java": ["java"],
+    "JavaScript": ["javascript", "js"],
+    "TypeScript": ["typescript", "ts"],
+    "HTML": ["html"],
+    "CSS": ["css"],
+    "React": ["react", "react.js", "reactjs"],
+    "Node.js": ["node.js", "nodejs", "node"],
+    "Express.js": ["express.js", "expressjs"],
+    "MongoDB": ["mongodb", "mongo db"],
+    "MySQL": ["mysql", "my sql"],
+    "PostgreSQL": ["postgresql", "postgres"],
+    "SQL": ["sql", "structured query language"],
+    "Flutter": ["flutter"],
+    "Dart": ["dart"],
+    "Machine Learning": ["machine learning", "ml"],
+    "Deep Learning": ["deep learning", "dl"],
+    "NLP": ["nlp", "natural language processing"],
+    "REST APIs": ["rest api", "rest apis", "restful api", "restful apis"],
+    "Git": ["git"],
+    "GitHub": ["github"],
+    "Docker": ["docker"],
+    "AWS": ["aws", "amazon web services"],
+    "Power BI": ["power bi", "powerbi"],
+    "Excel": ["excel", "microsoft excel"]
+  },
+  "business": {
+    "Communication": ["communication", "verbal communication"],
+    "Leadership": ["leadership", "team leadership"],
+    "Project Management": ["project management"],
+    "Problem Solving": ["problem solving", "problem-solving"],
+    "Time Management": ["time management"],
+    "Teamwork": ["teamwork", "team work", "collaboration"],
+    "Customer Service": ["customer service", "customer support"],
+    "Business Analysis": ["business analysis", "business analyst"]
+  },
+  "creative": {
+    "UI/UX Design": ["ui/ux", "ui ux", "user interface design", "user experience design"],
+    "Graphic Design": ["graphic design"],
+    "Figma": ["figma"],
+    "Adobe Photoshop": ["adobe photoshop", "photoshop"],
+    "Video Editing": ["video editing"],
+    "Content Writing": ["content writing", "copywriting"]
+  },
+  "skill_stacks": {
+    "MERN": ["mongodb", "express.js", "react", "node.js"],
+    "MEAN": ["mongodb", "express.js", "angular", "node.js"],
+    "LAMP": ["linux", "apache", "mysql", "php"]
+  }
+}

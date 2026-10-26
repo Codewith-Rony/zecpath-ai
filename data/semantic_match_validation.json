@@ -1,0 +1,38 @@
+[
+  {
+    "label": "Python backend developer - positive",
+    "resume_text": "Python developer building backend APIs with Flask and Django",
+    "job_text": "Python backend engineer required to build REST APIs using Django or Flask",
+    "is_match": true
+  },
+  {
+    "label": "Frontend developer - positive",
+    "resume_text": "Frontend engineer building responsive web interfaces with JavaScript and React",
+    "job_text": "Frontend developer to create user interfaces with React and JavaScript",
+    "is_match": true
+  },
+  {
+    "label": "Data analyst - positive",
+    "resume_text": "Data analyst using SQL, Python, pandas and dashboards to analyze business trends",
+    "job_text": "Data analyst needed for SQL queries, Python analytics and dashboard reporting",
+    "is_match": true
+  },
+  {
+    "label": "Unrelated chef - negative",
+    "resume_text": "Professional chef preparing pastries, menus and restaurant dishes",
+    "job_text": "Python backend engineer required to build REST APIs using Django or Flask",
+    "is_match": false
+  },
+  {
+    "label": "Unrelated electrician - negative",
+    "resume_text": "Electrician installing wiring, circuit breakers and lighting systems",
+    "job_text": "Frontend developer to create user interfaces with React and JavaScript",
+    "is_match": false
+  },
+  {
+    "label": "Unrelated accountant - negative",
+    "resume_text": "Accountant managing payroll, invoices, tax reports and bookkeeping",
+    "job_text": "Data analyst needed for SQL queries, Python analytics and dashboard reporting",
+    "is_match": false
+  }
+]
