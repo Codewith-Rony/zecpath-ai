@@ -7,8 +7,13 @@ DEFAULT_THRESHOLDS = {
 }
 
 
-def classify_candidate(score, thresholds=None):
-    """Return a recommendation based on the candidate's ATS score."""
+
+def classify_candidate(
+    score,
+    thresholds=None,
+    manual_review_required=False,
+):
+    """Return a recommendation using score and coverage safeguards."""
     selected = thresholds or DEFAULT_THRESHOLDS
 
     shortlist_threshold = selected["shortlist"]
@@ -35,6 +40,9 @@ def classify_candidate(score, thresholds=None):
     ):
         raise ValueError("Score must be between 0 and 100, or None.")
 
+    if manual_review_required:
+        return "manual_review"
+
     if score >= shortlist_threshold:
         return "shortlist"
 
@@ -44,8 +52,9 @@ def classify_candidate(score, thresholds=None):
     return "reject_recommendation"
 
 
+
 def shortlist_candidates(ranked_candidates, thresholds=None):
-    """Add a recommendation to each ranked candidate."""
+    """Add recommendations while respecting scoring coverage flags."""
     results = []
 
     for candidate in ranked_candidates:
@@ -53,6 +62,7 @@ def shortlist_candidates(ranked_candidates, thresholds=None):
         item["recommendation"] = classify_candidate(
             item.get("ats_score"),
             thresholds,
+            item.get("manual_review_required", False),
         )
         results.append(item)
 

@@ -61,3 +61,28 @@ def test_duplicate_skills_are_removed():
     ]
 
     assert len(python_skills) == 1
+
+
+def test_mern_components_are_marked_as_inferred():
+    result = extract_skills("Experienced with the MERN stack.")
+
+    skills = {
+        skill["name"]: skill
+        for skill in result["skills"]
+    }
+
+    for component in ("MongoDB", "Express.js", "React", "Node.js"):
+        assert skills[component]["confidence"] == 0.75
+        assert skills[component]["inferred_from"] == "MERN"
+
+
+def test_direct_skill_mention_keeps_higher_confidence():
+    result = extract_skills("Experienced with MERN and Python.")
+
+    skills = {
+        skill["name"]: skill
+        for skill in result["skills"]
+    }
+
+    assert skills["Python"]["confidence"] == 0.98
+    assert skills["MERN"]["confidence"] == 0.98

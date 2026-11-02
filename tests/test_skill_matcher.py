@@ -36,3 +36,43 @@ def test_skill_matcher_uses_full_description_fallback():
     )
     assert result["extraction_mode"] == "full_description_fallback"
     assert result["skill_match_score"] == 100.0
+
+def test_skill_aliases_are_recognized():
+    result = score_skill_match(
+        "Experienced with JS, TS, NodeJS and Postgres.",
+        """
+        Required Skills:
+        JavaScript
+        TypeScript
+        Node.js
+        PostgreSQL
+        """
+    )
+
+    assert result["skill_match_score"] == 100.0
+    assert result["missing_required_skills"] == []
+
+
+def test_short_alias_does_not_match_unrelated_words():
+    result = score_skill_match(
+        "I enjoy discussing project planning and teamwork.",
+        """
+        Required Skills:
+        Python
+        """
+    )
+
+    assert result["skill_match_score"] == 0.0
+    assert result["matched_required_skills"] == []
+
+
+def test_machine_learning_alias_is_recognized():
+    result = score_skill_match(
+        "Worked on ML projects.",
+        """
+        Required Skills:
+        Machine Learning
+        """
+    )
+
+    assert result["skill_match_score"] == 100.0

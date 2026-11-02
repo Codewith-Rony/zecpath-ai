@@ -2,7 +2,7 @@
 
 from parsers.jd_parser import build_job_profile
 from parsers.skill_extractor import extract_skills, load_skill_dictionary
-
+from parsers.resume_normalizer import normalize_resume_text
 
 KNOWN_ROLES = [
     "Python Developer", "Python Engineer", "Java Developer", "Java Engineer",
@@ -30,7 +30,7 @@ def score_skill_match(resume_text, job_description_text):
     """
     if not isinstance(resume_text, str) or not isinstance(job_description_text, str):
         raise ValueError("Resume text and job description text must be strings.")
-
+    resume_text = normalize_resume_text(resume_text)
     dictionary = load_skill_dictionary()
     known_skills = _known_skills(dictionary)
 

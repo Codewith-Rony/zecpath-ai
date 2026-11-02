@@ -22,7 +22,8 @@ ROLE_WEIGHTS = {
         "semantic_similarity": 30,
     },
 }
-
+# Provisional minimum coverage for automated score interpretation.
+MIN_SCORE_COVERAGE = 80
 
 def validate_component_scores(component_scores):
     for component, score in component_scores.items():
@@ -57,15 +58,30 @@ def validate_weights(weights):
     if sum(weights.values()) != 100:
         raise ValueError("Weights must total 100.")
 
-def calculate_ats_score(component_scores, role=None, weights=None):
+def calculate_ats_score(
+    component_scores,
+    role=None,
+    weights=None,
+    min_coverage=MIN_SCORE_COVERAGE,
+):
     validate_component_scores(component_scores)
+
+    if (
+        not isinstance(min_coverage, (int, float))
+        or isinstance(min_coverage, bool)
+        or not 0 <= min_coverage <= 100
+    ):
+        raise ValueError("Minimum coverage must be between 0 and 100.")
+
     if weights is not None:
         selected_weights = weights
     elif role in ROLE_WEIGHTS:
         selected_weights = ROLE_WEIGHTS[role]
     else:
         selected_weights = DEFAULT_WEIGHTS
+
     validate_weights(selected_weights)
+
     total_weight = sum(selected_weights.values())
     weighted_total = 0
     available_weight = 0
@@ -106,9 +122,13 @@ def calculate_ats_score(component_scores, role=None, weights=None):
         if total_weight > 0 else 0
     )
 
+    manual_review_required = coverage < min_coverage
+
     return {
         "ats_score": ats_score,
         "missing_components": missing_components,
         "coverage_percentage": coverage,
+        "minimum_coverage_required": min_coverage,
+        "manual_review_required": manual_review_required,
         "score_breakdown": breakdown,
     }

@@ -1,0 +1,17 @@
+warning: in the working copy of '.gitignore', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'main_ats_scorer.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'requirements.txt', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'scoring/skill_matcher.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'tests/test_skill_matcher.py', LF will be replaced by CRLF the next time Git touches it
+ .gitignore                       | 35 [32m+++++++++++++++++++++[m[31m-[m
+ main_ats_scorer.py               | 12 [32m++++[m[31m----[m
+ requirements.txt                 | 18 [32m++++++++++[m[31m-[m
+ scoring/ats_scorer.py            | 24 [32m+++++++++++++[m[31m--[m
+ scoring/shortlisting.py          | 16 [32m++++++++[m[31m--[m
+ scoring/skill_matcher.py         |  4 [32m+[m[31m--[m
+ tests/test_ats_scorer.py         | 48 [32m++++++++++++++++++++++++++++++[m
+ tests/test_candidate_pipeline.py | 64 [32m++++++++++++++++++++++++++++++++++++++++[m
+ tests/test_shortlisting.py       | 25 [32m++++++++++++++++[m
+ tests/test_skill_extractor.py    | 25 [32m++++++++++++++++[m
+ tests/test_skill_matcher.py      | 40 [32m+++++++++++++++++++++++++[m
+ 11 files changed, 297 insertions(+), 14 deletions(-)

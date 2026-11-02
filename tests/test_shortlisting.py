@@ -52,3 +52,28 @@ def test_shortlisting_does_not_modify_original():
     assert "recommendation" not in candidates[0]
     assert results[0]["recommendation"] == "shortlist"
 
+
+def test_low_coverage_candidate_requires_manual_review():
+    candidates = [
+        {
+            "ats_score": 90,
+            "manual_review_required": True,
+        }
+    ]
+
+    result = shortlist_candidates(candidates)
+
+    assert result[0]["recommendation"] == "manual_review"
+
+
+def test_sufficient_coverage_preserves_shortlist_recommendation():
+    candidates = [
+        {
+            "ats_score": 90,
+            "manual_review_required": False,
+        }
+    ]
+
+    result = shortlist_candidates(candidates)
+
+    assert result[0]["recommendation"] == "shortlist"

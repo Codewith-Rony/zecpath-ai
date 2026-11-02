@@ -14,7 +14,7 @@ from scoring.experience_relevance import score_experience_relevance
 from scoring.education_relevance import score_education_relevance
 from scoring.semantic_matcher import SemanticMatcher
 from scoring.ats_scorer import calculate_ats_score
-
+from parsers.privacy_masker import mask_personal_attributes
 
 def _known_skills():
     dictionary = load_skill_dictionary()
@@ -49,13 +49,13 @@ def generate_candidate_report(resume_path, jd_path, role_override=None):
         raise FileNotFoundError(f"Job description not found: {jd_path}")
 
     resume_data = extract_resume(str(resume_path))
-    resume_text = resume_data.get("cleaned_text", "")
+    original_resume_text = resume_data.get("cleaned_text", "")
     jd_text = extract_jd_text(str(jd_path))
-    if not resume_text or not resume_text.strip():
+    if not original_resume_text or not original_resume_text.strip():
         raise ValueError("No readable text found in the resume.")
-    if not jd_text or not jd_text.strip():
-        raise ValueError("No readable text found in the job description.")
 
+    # Mask common personal identifiers before candidate evaluation.
+    resume_text = mask_personal_attributes(original_resume_text)
     job_profile = build_job_profile(jd_text, _known_skills(), KNOWN_ROLES)
     role = role_override or job_profile.get("title") or "Software Developer"
 
@@ -100,6 +100,8 @@ def generate_candidate_report(resume_path, jd_path, role_override=None):
         "job_role": role,
         "ats_score": ats_result["ats_score"],
         "coverage_percentage": ats_result["coverage_percentage"],
+        "minimum_coverage_required": ats_result["minimum_coverage_required"],
+        "manual_review_required": ats_result["manual_review_required"],
         "missing_components": ats_result["missing_components"],
         "component_scores": component_scores,
         "score_breakdown": ats_result["score_breakdown"],
