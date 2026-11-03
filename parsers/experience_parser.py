@@ -30,7 +30,10 @@ def parse_date(value, current_date=None):
 
     match = re.fullmatch(r"(\d{4})", value)
     if match:
-        return date(int(match.group(1)), 1, 1)
+        year = int(match.group(1))
+        if 1900 <= year <= 2100:
+            return date(year, 1, 1)
+        return None
 
     match = re.fullmatch(
         r"([A-Za-z]+)\s+(\d{1,2}),?\s+(\d{4})",
@@ -84,7 +87,7 @@ def extract_experience(resume_text, current_date=None):
         r"(?P<start>"
         r"(?:[A-Za-z]+\s+\d{1,2},?\s+\d{4}|"
         r"[A-Za-z]+\s+\d{4}|\d{1,2}/\d{4}|\d{4})"
-        r")\s*(?:-|â€“|â€”|to)\s*"
+        r")\s*(?:-|–|—|to)\s*"
         r"(?P<end>"
         r"(?:[A-Za-z]+\s+\d{1,2},?\s+\d{4}|"
         r"[A-Za-z]+\s+\d{4}|\d{1,2}/\d{4}|\d{4}|"
@@ -104,6 +107,8 @@ def extract_experience(resume_text, current_date=None):
         "analyst", "designer", "consultant", "architect",
         "administrator", "scientist", "specialist", "lead",
         "programmer", "tester", "technician",
+        "partner", "executive", "recruiter", "coordinator",
+        "officer", "generalist", "trainee", "assistant",
     )
     experience_headings = {
         "experience", "work experience", "professional experience",
@@ -161,26 +166,46 @@ def extract_experience(resume_text, current_date=None):
         if not start_date or not end_date or end_date < start_date:
             continue
 
-        description = line[:match.start()].strip(" ,-â€“â€”|")
+        description = line[:match.start()].strip(" ,-–—|")
         title = ""
         company = "Unknown"
 
-        # Layout 1: "Job Title at Company" on the date line.
+        # Layout 1: "Job Title at Company" or "Job Title | Company" on the date line.
         if description:
-            parts = title_company_split.split(description, maxsplit=1)
-            if len(parts) == 2:
-                title, company = parts[0].strip(), parts[1].strip()
-            elif is_job_title(description):
-                title = description
+            if "|" in description:
+                pipe_parts = [p.strip() for p in description.split("|") if p.strip()]
+                if len(pipe_parts) >= 2:
+                    if is_job_title(pipe_parts[0]):
+                        title, company = pipe_parts[0], pipe_parts[1]
+                    elif is_job_title(pipe_parts[1]):
+                        title, company = pipe_parts[1], pipe_parts[0]
+                elif len(pipe_parts) == 1 and is_job_title(pipe_parts[0]):
+                    title = pipe_parts[0]
+            if not title:
+                parts = title_company_split.split(description, maxsplit=1)
+                if len(parts) == 2:
+                    title, company = parts[0].strip(), parts[1].strip()
+                elif is_job_title(description):
+                    title = description
 
         # Layout 2: job title and company are on the line before the dates.
         if not title and index > 0:
             previous = lines[index - 1]
-            parts = title_company_split.split(previous, maxsplit=1)
-            if len(parts) == 2 and is_job_title(parts[0].strip()):
-                title, company = parts[0].strip(), parts[1].strip()
-            elif is_job_title(previous):
-                title = previous
+            if "|" in previous:
+                pipe_parts = [p.strip() for p in previous.split("|") if p.strip()]
+                if len(pipe_parts) >= 2:
+                    if is_job_title(pipe_parts[0]):
+                        title, company = pipe_parts[0], pipe_parts[1]
+                    elif is_job_title(pipe_parts[1]):
+                        title, company = pipe_parts[1], pipe_parts[0]
+                elif len(pipe_parts) == 1 and is_job_title(pipe_parts[0]):
+                    title = pipe_parts[0]
+            if not title:
+                parts = title_company_split.split(previous, maxsplit=1)
+                if len(parts) == 2 and is_job_title(parts[0].strip()):
+                    title, company = parts[0].strip(), parts[1].strip()
+                elif is_job_title(previous):
+                    title = previous
 
         # Layout 3: company, date range, job title (e.g. this sample PDF).
         if not title and index + 1 < len(lines):
@@ -213,7 +238,7 @@ def extract_experience(resume_text, current_date=None):
                         or date_pattern.search(candidate)
                     ):
                         break
-                    if is_location(candidate) or candidate.startswith(("-", "â€¢", "|")):
+                    if is_location(candidate) or candidate.startswith(("-", "\u2022", "|")):
                         continue
                     if any(term in candidate_lower for term in education_terms):
                         continue
@@ -223,12 +248,29 @@ def extract_experience(resume_text, current_date=None):
         if not title or not is_job_title(title):
             continue
 
+        responsibilities = []
+        for next_idx in range(index + 1, len(lines)):
+            next_l = lines[next_idx].strip()
+            next_l_lower = next_l.strip(" :|-").lower()
+            if (
+                next_l_lower in experience_headings
+                or next_l_lower in education_headings
+                or next_l_lower in other_section_headings
+                or date_pattern.search(next_l)
+            ):
+                break
+            clean_l = re.sub(r"^[-•●▪*]\s*", "", next_l).strip()
+            if clean_l and not is_location(clean_l):
+                responsibilities.append(clean_l)
+        responsibilities_text = " ".join(responsibilities)
+
         entries.append({
             "company": company,
             "job_title": title,
             "start_date": start_date.isoformat(),
             "end_date": end_date.isoformat(),
             "duration_months": duration_months(start_date, end_date),
+            "responsibilities": responsibilities_text,
         })
 
     # Remove duplicate entries while preserving order.

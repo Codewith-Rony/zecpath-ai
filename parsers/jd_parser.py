@@ -52,6 +52,11 @@ SECTION_ALIASES = {
     "the strongest application": "application",
     "engineering perks": "benefits",
     "about our products": "about",
+    "required criteria": "required",
+    "preferred criteria": "preferred",
+    "experience expectation": "experience",
+    "role summary": "about",
+    "manual review notes": "notes",
 }
 
 def detect_sections(text):
@@ -130,7 +135,7 @@ def extract_skills(text, known_skills):
         possible_matches = [skill_lower]
 
         for variation, normalized in SKILL_SYNONYMS.items():
-            if normalized.lower() == skill_lower:
+            if normalized.lower() in {skill_lower, skill_lower.rstrip('s')}:
                 possible_matches.append(variation)
 
         for match in possible_matches:
@@ -157,32 +162,81 @@ def extract_skills_from_section(section_text, known_skills):
 ROLE_VARIATIONS = {
     "python developer": "Python Developer",
     "python engineer": "Python Developer",
+    "junior python developer": "Python Developer",
+    "senior python developer": "Python Developer",
     "backend developer": "Backend Developer",
     "backend engineer": "Backend Developer",
+    "senior backend engineer": "Backend Developer",
+    "junior backend engineer": "Backend Developer",
     "software engineer": "Software Engineer",
     "software developer": "Software Developer",
+    "senior software engineer": "Software Engineer",
+    "junior software developer": "Software Developer",
     "frontend developer": "Frontend Developer",
     "front end developer": "Frontend Developer",
     "full stack developer": "Full Stack Developer",
     "full-stack developer": "Full Stack Developer",
     "data scientist": "Data Scientist",
     "machine learning engineer": "Machine Learning Engineer",
+    "ai engineer": "AI Engineer",
+    "devops engineer": "DevOps Engineer",
+    "hr executive": "HR Executive",
+    "human resources executive": "HR Executive",
+    "junior hr executive": "HR Executive",
+    "senior hr executive": "HR Executive",
+    "hr manager": "HR Manager",
+    "human resources manager": "HR Manager",
+    "senior hr manager": "HR Manager",
+    "hr business partner": "HR Business Partner",
+    "human resources business partner": "HR Business Partner",
+    "senior hr business partner": "HR Business Partner",
+    "talent acquisition specialist": "Talent Acquisition Specialist",
+    "senior talent acquisition specialist": "Talent Acquisition Specialist",
+    "recruiter": "Recruiter",
+    "senior recruiter": "Recruiter",
+    "junior recruiter": "Recruiter",
 }
 
 
 def extract_role(text, known_roles):
     """
-    Detect a job role from JD text and normalize common variations.
+    Detect a job role from JD text, prioritizing explicit titles and normalizing variations.
     """
+    lines = [line.strip() for line in text.splitlines() if line.strip()]
+    if not lines:
+        return None
+
+    sorted_variations = sorted(ROLE_VARIATIONS.keys(), key=len, reverse=True)
+
+    header_re = re.compile(
+        r"^(?:job\s+description|job\s+title|title|role(?:\s+summary)?|position)\s*[:|-]\s*(.+)$",
+        re.IGNORECASE,
+    )
+    for line in lines[:5]:
+        header_match = header_re.match(line)
+        header_candidate = header_match.group(1).lower() if header_match else line.lower()
+        for var in sorted_variations:
+            pattern = r"(?<![a-z0-9])" + re.escape(var) + r"(?![a-z0-9])"
+            if re.search(pattern, header_candidate):
+                return ROLE_VARIATIONS[var]
+
+    top_text = " \n ".join(lines[:5]).lower()
+    for var in sorted_variations:
+        pattern = r"(?<![a-z0-9])" + re.escape(var) + r"(?![a-z0-9])"
+        if re.search(pattern, top_text):
+            return ROLE_VARIATIONS[var]
 
     text_lower = text.lower()
+    for var in sorted_variations:
+        pattern = r"(?<![a-z0-9])" + re.escape(var) + r"(?![a-z0-9])"
+        if re.search(pattern, text_lower):
+            return ROLE_VARIATIONS[var]
 
-    for role in known_roles:
-        if role.lower() in text_lower:
-            return ROLE_VARIATIONS.get(
-                role.lower(),
-                role
-            )
+    sorted_roles = sorted(known_roles, key=len, reverse=True)
+    for role in sorted_roles:
+        pattern = r"(?<![a-z0-9])" + re.escape(role.lower()) + r"(?![a-z0-9])"
+        if re.search(pattern, text_lower):
+            return ROLE_VARIATIONS.get(role.lower(), role)
 
     return None
 
@@ -281,7 +335,14 @@ EDUCATION_VARIATIONS = {
     "mtech": "M.Tech",
     "mca": "MCA",
     "mba": "MBA",
-    "computer science": "Computer Science"
+    "bba": "BBA",
+    "b.com": "B.Com",
+    "bcom": "B.Com",
+    "m.com": "M.Com",
+    "mcom": "M.Com",
+    "computer science": "Computer Science",
+    "human resources": "Human Resources",
+    "business administration": "Business Administration",
 }
 
 
@@ -510,7 +571,7 @@ def extract_optional_skills(text, known_skills):
         possible_matches = [skill_lower]
 
         for variation, normalized in SKILL_SYNONYMS.items():
-            if normalized.lower() == skill_lower:
+            if normalized.lower() in {skill_lower, skill_lower.rstrip('s')}:
                 possible_matches.append(variation)
 
         for skill_match in possible_matches:

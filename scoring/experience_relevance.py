@@ -1,26 +1,29 @@
-
+import functools
 import re
 from difflib import SequenceMatcher
+
+STOP_WORDS = {
+    "a", "an", "and", "at", "for", "in", "of",
+    "the", "to", "with", "on"
+}
+_RE_NORM_TEXT = re.compile(r"[^a-z0-9+#.]+")
 
 
 def normalize_text(text):
     """Normalize text for role comparison."""
     text = (text or "").lower()
-    return re.sub(r"[^a-z0-9+#.]+", " ", text).strip()
+    return _RE_NORM_TEXT.sub(" ", text).strip()
 
 
 def tokenize(text):
     """Convert text into a set of meaningful tokens."""
-    stop_words = {
-        "a", "an", "and", "at", "for", "in", "of",
-        "the", "to", "with", "on"
-    }
     return {
         word for word in normalize_text(text).split()
-        if word not in stop_words
+        if word not in STOP_WORDS
     }
 
 
+@functools.lru_cache(maxsize=2048)
 def calculate_similarity(text_a, text_b):
     """Calculate similarity using token overlap and string similarity."""
     tokens_a = tokenize(text_a)
@@ -37,7 +40,12 @@ def calculate_similarity(text_a, text_b):
     return round((0.7 * overlap + 0.3 * sequence) * 100, 2)
 
 
-def score_experience_relevance(entries, target_role, target_requirements=None):
+def clear_experience_similarity_cache():
+    """Clear the calculate_similarity LRU cache."""
+    calculate_similarity.cache_clear()
+
+
+def score_experience_relevance(entries, target_role, target_requirements=None, experience_requirement=None):
     """
     Score each previous role against the target role and requirements.
 
@@ -87,7 +95,18 @@ def score_experience_relevance(entries, target_role, target_requirements=None):
         reverse=True,
     )
 
+    assessment = None
+    if isinstance(experience_requirement, dict):
+        min_years = experience_requirement.get("minimum_years")
+        max_years = experience_requirement.get("maximum_years")
+        assessment = {
+            "minimum_years_required": min_years,
+            "maximum_years_required": max_years,
+            "has_requirement": min_years is not None or max_years is not None,
+        }
+
     return {
         "target_role": target_role,
         "role_scores": results,
+        "experience_requirement_assessment": assessment,
     }

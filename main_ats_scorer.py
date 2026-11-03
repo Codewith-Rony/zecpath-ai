@@ -6,7 +6,7 @@ from pathlib import Path
 from parsers.resume_extractor import extract_resume
 from parsers.jd_extractor import extract_jd_text
 from parsers.jd_parser import build_job_profile
-from parsers.experience_parser import extract_experience
+from parsers.experience_parser import extract_experience, analyze_experience_timeline
 from parsers.education_parser import extract_academic_profile
 from parsers.skill_extractor import load_skill_dictionary
 from scoring.skill_matcher import score_skill_match, KNOWN_ROLES
@@ -57,19 +57,51 @@ def generate_candidate_report(resume_path, jd_path, role_override=None):
     # Mask common personal identifiers before candidate evaluation.
     resume_text = mask_personal_attributes(original_resume_text)
     job_profile = build_job_profile(jd_text, _known_skills(), KNOWN_ROLES)
-    role = role_override or job_profile.get("title") or "Software Developer"
+    role = role_override or job_profile.get("title") or "Undetected Role"
 
-    # 1) Skill match: actual resume and JD text.
-    skill_result = score_skill_match(resume_text, jd_text)
+    # 1) Skill match: actual resume and JD text (reuse precomputed job_profile).
+    skill_result = score_skill_match(resume_text, jd_text, job_profile=job_profile)
     skill_score = skill_result.get("skill_match_score")
 
     # 2) Experience relevance: average scores across parsed work entries.
     experience_entries = extract_experience(resume_text)
+    timeline_analysis = analyze_experience_timeline(experience_entries)
     requirements = list(job_profile.get("responsibilities") or [])
     experience_requirement = job_profile.get("experience_requirement")
-    if isinstance(experience_requirement, str) and experience_requirement.strip():
-        requirements.append(experience_requirement.strip())
-    experience_result = score_experience_relevance(experience_entries, role, requirements)
+
+    experience_result = score_experience_relevance(
+        experience_entries,
+        role,
+        requirements,
+        experience_requirement=experience_requirement,
+    )
+    experience_result["timeline_analysis"] = timeline_analysis
+    if isinstance(experience_requirement, dict):
+        min_years = experience_requirement.get("minimum_years")
+        max_years = experience_requirement.get("maximum_years")
+        cand_years = timeline_analysis.get("total_experience_years", 0.0)
+        meets_min = (cand_years >= min_years) if min_years is not None else None
+        exceeds_max = (cand_years > max_years) if max_years is not None else False
+        experience_result["experience_level_assessment"] = {
+            "candidate_total_years": cand_years,
+            "required_minimum_years": min_years,
+            "required_maximum_years": max_years,
+            "meets_minimum_requirement": meets_min,
+            "exceeds_maximum_requirement": exceeds_max,
+            "assessment_note": (
+                "Candidate meets required experience range."
+                if meets_min and not exceeds_max
+                else "Candidate experience level requires review."
+                if min_years is not None
+                else "No structured experience range specified."
+            ),
+        }
+    else:
+        experience_result["experience_level_assessment"] = {
+            "limitation": "No structured experience requirement available in job profile."
+        }
+
+    # Only score experience relevance if experience entries were found; do not invent a score.
     experience_score = _mean_or_none([
         item.get("relevance_score") for item in experience_result.get("role_scores", [])
     ])

@@ -18,6 +18,24 @@ def normalize_degree(value):
         "m.sc.": "Master of Science",
         "bca": "Bachelor of Computer Applications",
         "mca": "Master of Computer Applications",
+        "bba": "Bachelor of Business Administration",
+        "mba": "Master of Business Administration",
+        "b.com": "Bachelor of Commerce",
+        "b.com.": "Bachelor of Commerce",
+        "bcom": "Bachelor of Commerce",
+        "m.com": "Master of Commerce",
+        "m.com.": "Master of Commerce",
+        "mcom": "Master of Commerce",
+        "b.a": "Bachelor of Arts",
+        "b.a.": "Bachelor of Arts",
+        "ba": "Bachelor of Arts",
+        "m.a": "Master of Arts",
+        "m.a.": "Master of Arts",
+        "ma": "Master of Arts",
+        "pgdm": "Post Graduate Diploma in Management",
+        "ph.d": "Doctor of Philosophy",
+        "ph.d.": "Doctor of Philosophy",
+        "phd": "Doctor of Philosophy",
     }
 
     return degree_map.get(value.lower(), value)
@@ -28,11 +46,16 @@ def extract_education(resume_text):
     education = []
 
     degree_pattern = re.compile(
-        r"\b(B\.?\s?Tech\.?|B\.?\s?E\.?|M\.?\s?Tech\.?|"
+        r"\b("
+        r"B\.?\s?Tech\.?|B\.?\s?E\.?|M\.?\s?Tech\.?|"
         r"B\.?\s?Sc\.?|M\.?\s?Sc\.?|BCA|MCA|"
+        r"BBA|MBA|B\.?\s?Com\.?|M\.?\s?Com\.?|"
+        r"B\.?\s?A\.?|M\.?\s?A\.?|PGDM|Ph\.?D\.?|"
         r"Bachelor of (?:Technology|Engineering|Science|Arts|Commerce|"
-        r"Computer Applications)|Master of (?:Technology|Engineering|"
-        r"Science|Arts|Computer Applications))\b",
+        r"Computer Applications|Business Administration)|"
+        r"Master of (?:Technology|Engineering|Science|Arts|Commerce|"
+        r"Computer Applications|Business Administration)"
+        r")\b",
         re.IGNORECASE,
     )
 
@@ -52,12 +75,18 @@ def extract_education(resume_text):
         # Try to identify the field of study.
         field_of_study = None
         field_match = re.search(
-            r"\bin\s+(.+?)(?:\s*\(|$)",
+            r"\bin\s+([^|(]+)",
             line,
             re.IGNORECASE,
         )
         if field_match:
             field_of_study = field_match.group(1).strip(" .,-")
+        else:
+            after_degree = line[match.end():].strip(" .,-")
+            if after_degree:
+                first_seg = after_degree.split("|")[0].strip(" .,-")
+                if first_seg and not any(term in first_seg.lower() for term in ["university", "college", "institute", "school", "cgpa", "gpa", "percentage", "19", "20"]):
+                    field_of_study = first_seg
 
         # Find a graduation year on this line or nearby lines.
         graduation_year = None

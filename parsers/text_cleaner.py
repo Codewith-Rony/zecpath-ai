@@ -16,6 +16,9 @@ SECTION_HEADINGS = {
     "languages": "LANGUAGES",
 }
 
+_RE_EXCESSIVE_SPACES = re.compile(r" {2,}")
+_RE_CONTROL_CHARS = re.compile(r"[\x00-\x08\x0b\x0c\x0e-\x1f\x7f]")
+
 
 def clean_line(line):
     """
@@ -25,6 +28,9 @@ def clean_line(line):
 
     line = unicodedata.normalize("NFKC", line)
 
+    # Strip unprintable control characters that may occur in noisy/corrupt files
+    line = _RE_CONTROL_CHARS.sub("", line)
+
     # Replace different bullet characters
     line = line.replace("•", "-")
     line = line.replace("●", "-")
@@ -33,8 +39,8 @@ def clean_line(line):
     # Replace tabs with spaces
     line = line.replace("\t", " ")
 
-    # Remove excessive spaces
-    line = re.sub(r" {2,}", " ", line)
+    # Remove excessive spaces using precompiled regex
+    line = _RE_EXCESSIVE_SPACES.sub(" ", line)
 
     return line.strip()
 
@@ -54,6 +60,11 @@ def clean_resume_text(text):
     """
     Clean and normalize extracted resume text.
     """
+    if not text:
+        return ""
+
+    # Strip unprintable control characters (including VT, FF) before line splitting
+    text = _RE_CONTROL_CHARS.sub("", text)
 
     cleaned_lines = []
 

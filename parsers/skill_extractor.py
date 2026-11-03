@@ -1,4 +1,3 @@
-
 import json
 import re
 from pathlib import Path
@@ -6,13 +5,61 @@ from difflib import SequenceMatcher
 
 
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
-DICTIONARY_PATH = PROJECT_ROOT / "data" / "skill_dictionary.json"
+DICTIONARY_PATH = (PROJECT_ROOT / "data" / "skill_dictionary.json").resolve()
+
+# In-memory cache for skill dictionary: (dict_path, mtime_ns, loaded_dict)
+_SKILL_DICT_CACHE = None
+_SKILL_DICT_MTIME = None
+_SKILL_DICT_PATH = None
 
 
-def load_skill_dictionary():
-    """Load the master skill dictionary from JSON."""
-    with DICTIONARY_PATH.open("r", encoding="utf-8") as file:
-        return json.load(file)
+def clear_skill_dictionary_cache():
+    """Clear the cached skill dictionary. Useful for testing and manual reloading."""
+    global _SKILL_DICT_CACHE, _SKILL_DICT_MTIME, _SKILL_DICT_PATH
+    _SKILL_DICT_CACHE = None
+    _SKILL_DICT_MTIME = None
+    _SKILL_DICT_PATH = None
+
+
+def _clone_dictionary(data):
+    """Fast deep copy for skill dictionary data structure to prevent shared mutable state."""
+    return {
+        cat: {k: list(v) if isinstance(v, list) else v for k, v in sub.items()}
+        if isinstance(sub, dict) else sub
+        for cat, sub in data.items()
+    }
+
+
+def load_skill_dictionary(path=None):
+    """Load the master skill dictionary with caching and auto-reload on file change.
+
+    Returns a clean copy of the cached dictionary to prevent shared mutable state.
+    """
+    global _SKILL_DICT_CACHE, _SKILL_DICT_MTIME, _SKILL_DICT_PATH
+
+    dict_path = DICTIONARY_PATH if path is None else Path(path).resolve()
+
+    if not dict_path.is_file():
+        raise FileNotFoundError(f"Skill dictionary not found: {dict_path}")
+
+    current_mtime = dict_path.stat().st_mtime_ns
+
+    # Return cached copy if file has not been modified
+    if (
+        _SKILL_DICT_CACHE is not None
+        and _SKILL_DICT_PATH == dict_path
+        and _SKILL_DICT_MTIME == current_mtime
+    ):
+        return _clone_dictionary(_SKILL_DICT_CACHE)
+
+    with dict_path.open("r", encoding="utf-8") as file:
+        loaded = json.load(file)
+
+    _SKILL_DICT_CACHE = loaded
+    _SKILL_DICT_MTIME = current_mtime
+    _SKILL_DICT_PATH = dict_path
+
+    return _clone_dictionary(_SKILL_DICT_CACHE)
 
 
 def normalize_text(text):
@@ -75,7 +122,6 @@ def extract_skills(resume_text):
                     component, dictionary
                 )
 
-
                 if canonical_component:
                     if canonical_component not in extracted:
                         extracted[canonical_component] = {
@@ -93,7 +139,6 @@ def extract_skills(resume_text):
                         extracted[canonical_component].setdefault(
                             "inferred_from", stack_name
                         )
-
 
     return {
         "skills": sorted(

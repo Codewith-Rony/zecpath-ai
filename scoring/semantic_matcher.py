@@ -5,34 +5,67 @@ A transparent token/bigram vector fallback keeps the module runnable offline,
 but is lexical rather than truly semantic. Scores are similarity indicators,
 not probabilities or hiring decisions.
 """
+import functools
 import math
 import re
 from collections import Counter
 
 DEFAULT_MODEL = "sentence-transformers/all-MiniLM-L6-v2"
 
+# Module-level cache for sentence-transformers package availability
+_SENTENCE_TRANSFORMERS_AVAILABLE = None
+
+
+def _check_sentence_transformers():
+    """Check once whether sentence_transformers is importable and cache the result."""
+    global _SENTENCE_TRANSFORMERS_AVAILABLE
+    if _SENTENCE_TRANSFORMERS_AVAILABLE is None:
+        try:
+            import sentence_transformers  # noqa: F401
+            _SENTENCE_TRANSFORMERS_AVAILABLE = True
+        except (ImportError, OSError, RuntimeError):
+            _SENTENCE_TRANSFORMERS_AVAILABLE = False
+    return _SENTENCE_TRANSFORMERS_AVAILABLE
+
+
 def _tokens(text):
     return re.findall(r"[a-z0-9+#.]+", (text or "").lower())
 
-def _fallback_vector(text):
+
+@functools.lru_cache(maxsize=256)
+def _cached_fallback_vector(text):
+    """Compute and cache normalized token-bigram vector representation as immutable tuple."""
     tokens = _tokens(text)
     features = Counter(tokens)
     features.update(f"{a}_{b}" for a, b in zip(tokens, tokens[1:]))
     norm = math.sqrt(sum(value * value for value in features.values()))
     if norm:
-        return {key: value / norm for key, value in features.items()}
-    return {}
+        return tuple((key, value / norm) for key, value in features.items())
+    return ()
+
+
+def clear_fallback_vector_cache():
+    """Clear the fallback vector LRU cache."""
+    _cached_fallback_vector.cache_clear()
+
+
+def _fallback_vector(text):
+    """Return dictionary of normalized token/bigram frequencies."""
+    items = _cached_fallback_vector(text or "")
+    return dict(items)
+
 
 def _cosine_sparse(a, b):
     if not a or not b:
         return 0.0
     return max(0.0, min(1.0, sum(value * b.get(key, 0.0) for key, value in a.items())))
 
+
 class SemanticMatcher:
     def __init__(self, model_name=DEFAULT_MODEL, prefer_embeddings=True):
         self.model_name = model_name
         self.model = None
-        if prefer_embeddings:
+        if prefer_embeddings and _check_sentence_transformers():
             try:
                 from sentence_transformers import SentenceTransformer
                 self.model = SentenceTransformer(model_name)
@@ -75,6 +108,7 @@ class SemanticMatcher:
             "embedding_mode": self.mode,
             "interpretation": "similarity score, not probability",
         }
+
 
 def evaluate_pairs(matcher, labeled_pairs, threshold=55.0):
     """Evaluate labeled examples; labels should be 1 for match and 0 for non-match."""

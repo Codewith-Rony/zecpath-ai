@@ -10,6 +10,10 @@ KNOWN_ROLES = [
     "Front End Developer", "Full Stack Developer", "Full-Stack Developer",
     "Software Engineer", "Software Developer", "Data Scientist",
     "Machine Learning Engineer", "DevOps Engineer", "AI Engineer",
+    "HR Executive", "Human Resources Executive", "HR Manager",
+    "Human Resources Manager", "HR Business Partner",
+    "Human Resources Business Partner", "Talent Acquisition Specialist",
+    "Recruiter",
 ]
 
 
@@ -21,12 +25,21 @@ def _known_skills(dictionary):
     return list(dict.fromkeys(skills))
 
 
-def score_skill_match(resume_text, job_description_text):
+def score_skill_match(resume_text, job_description_text, job_profile=None):
     """Compare extracted resume skills with skills identified in a job description.
 
     Required skills account for 80% of the score and preferred skills for 20%.
     If only one category is available, that category is scored on its own.
     If no job skills can be identified, the score is None rather than a fabricated 0.
+
+    Parameters
+    ----------
+    resume_text : str
+        Cleaned or raw resume text.
+    job_description_text : str
+        Cleaned or raw job description text.
+    job_profile : dict, optional
+        Pre-built job profile dictionary to avoid redundant parsing.
     """
     if not isinstance(resume_text, str) or not isinstance(job_description_text, str):
         raise ValueError("Resume text and job description text must be strings.")
@@ -38,11 +51,12 @@ def score_skill_match(resume_text, job_description_text):
     resume_skills = sorted({item["name"] for item in resume_result["skills"]}, key=str.lower)
     resume_skill_set = {skill.casefold() for skill in resume_skills}
 
-    job_profile = build_job_profile(
-        job_description_text,
-        known_skills=known_skills,
-        known_roles=KNOWN_ROLES,
-    )
+    if job_profile is None:
+        job_profile = build_job_profile(
+            job_description_text,
+            known_skills=known_skills,
+            known_roles=KNOWN_ROLES,
+        )
     required_skills = list(dict.fromkeys(job_profile.get("required_skills", [])))
     preferred_skills = list(dict.fromkeys(job_profile.get("preferred_skills", [])))
 
