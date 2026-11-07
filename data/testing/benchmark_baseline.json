@@ -1,0 +1,35 @@
+{
+  "pdf_extraction": {
+    "files_count": 6,
+    "runs": 3,
+    "total_extractions": 18,
+    "total_time_seconds": 0.3324,
+    "avg_time_per_file_ms": 18.47,
+    "peak_memory_kb": 50.93,
+    "peak_memory_mb": 0.05
+  },
+  "docx_extraction": {
+    "files_count": 6,
+    "runs": 3,
+    "total_extractions": 18,
+    "total_time_seconds": 1.0357,
+    "avg_time_per_file_ms": 57.54,
+    "peak_memory_kb": 5581.54,
+    "peak_memory_mb": 5.451
+  },
+  "complete_ats_scoring": {
+    "candidate_pairs_count": 48,
+    "total_time_seconds": 7.0319,
+    "avg_time_per_pair_ms": 146.5,
+    "peak_memory_kb": 5817.69,
+    "peak_memory_mb": 5.681
+  },
+  "micro_benchmarks": {
+    "skill_dict_100_calls_seconds": 0.0802,
+    "skill_dict_peak_kb": 29.21,
+    "matcher_init_100_calls_seconds": 0.3776,
+    "matcher_init_peak_kb": 3.2,
+    "jd_parse_20_calls_seconds": 0.4102,
+    "jd_parse_peak_kb": 37.78
+  }
+}

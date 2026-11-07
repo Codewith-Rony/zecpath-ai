@@ -1,0 +1,32 @@
+Day 17 Manual Review Rubric — Zecpath AI
+
+Use this rubric for each candidate–job description pair BEFORE viewing the ATS score or recommendation.
+
+Decision labels:
+- suitable: meets the defined minimum requirements with evidence.
+- not_suitable: does not meet one or more essential requirements.
+- borderline: evidence is incomplete or mixed; requires human review.
+
+Score each dimension from 0 to 2:
+0 = no evidence / does not meet
+1 = partial or transferable evidence
+2 = clear evidence
+
+Dimensions:
+1. Essential skills or functional capabilities
+2. Relevant experience and level
+3. Role-specific responsibilities / practical evidence
+4. Education or equivalent practical preparation (where the JD requires it)
+
+Suggested interpretation (guidance, not an automatic hiring rule):
+- 6–8, with no critical requirement missing: suitable
+- 0–3 or a critical requirement clearly missing: not_suitable
+- 4–5, ambiguous evidence, or conflicting evidence: borderline
+
+Important:
+- Apply the JD's experience expectations. A fresher JD must not require senior experience.
+- Do not use name, age, gender, location, photograph, or other non-job-related personal attributes.
+- Record a short evidence note for every decision.
+- Make the manual decision before checking ATS output where practical.
+- Do not use the resume's stated target title as proof of suitability.
+- Keep borderline cases separate from binary precision/recall calculations unless your evaluation protocol explicitly defines how they are handled.

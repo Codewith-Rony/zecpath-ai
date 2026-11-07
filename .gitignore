@@ -1,43 +1,55 @@
-# Virtual environment
+# Virtual environments
 venv/
 .venv/
+env/
 
-# Environment variables
+# Environment variables & credentials
 .env
 .env.*
 !.env.example
 
-# Python cache
+# Python compiled files & cache
 __pycache__/
-*.pyc
-*.pyo
+*.py[cod]
+*$py.class
+*.so
 
-# Pytest
+# Pytest & test cache
 .pytest_cache/
-
-#data
-data/
+.coverage
+htmlcov/
 
 # Logs
 logs/
 *.log
+test_results*.log
 
-# Generated outputs
-outputs/
+# Runtime generated outputs & reports
+outputs/*
+!outputs/.gitkeep
+reports/
+candidate_report.json
+scoring_results.json
 
-# Uploaded resumes and job descriptions
-storage/resumes/
-storage/job_descriptions/
+# Runtime uploaded storage (resumes & job descriptions)
+storage/resumes/*
+!storage/resumes/.gitkeep
+storage/job_descriptions/*
+!storage/job_descriptions/.gitkeep
+uploads/
 
-# IDE files
+# Unwanted or sensitive candidate resumes in data/
+data/resumes/
+data/sample_resumes/Bibin_VS_Resume*
+data/sample_resumes/resume_*.pdf
+
+# IDE & Editor files
 .vscode/
 .idea/
+*.swp
+*.swo
 
-# OS files
+# Operating System files
 .DS_Store
 Thumbs.db
-
-# Build files
-build/
-dist/
-*.egg-info/
+ehthumbs.db

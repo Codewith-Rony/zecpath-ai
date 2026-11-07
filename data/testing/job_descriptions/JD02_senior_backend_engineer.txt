@@ -1,0 +1,35 @@
+JOB DESCRIPTION: Senior Backend Engineer
+Job ID: JD02
+Level: Senior / typically 6+ years
+Department: Engineering
+
+ROLE SUMMARY
+We are seeking a Senior Backend Engineer to design, deliver and operate reliable backend services and mentor engineers.
+
+RESPONSIBILITIES
+- Design and implement scalable backend services and REST APIs.
+- Make sound architecture and data-modeling decisions.
+- Improve service performance, reliability and observability.
+- Work with databases, caching and asynchronous or event-driven systems.
+- Review code, mentor engineers and coordinate technical delivery.
+- Support production deployments and incident resolution.
+
+REQUIRED CRITERIA
+- Strong professional backend engineering experience, typically 6 or more years.
+- Significant hands-on experience with Python or another production backend language.
+- Experience designing and maintaining APIs or distributed services.
+- Strong SQL and relational database skills.
+- Evidence of production ownership, system design or performance/reliability improvements.
+- Experience collaborating through code review and technical mentoring.
+
+PREFERRED CRITERIA
+- Python frameworks such as Django, FastAPI or Flask.
+- PostgreSQL, Redis, Kafka or similar technologies.
+- Docker, Kubernetes and cloud platforms such as AWS.
+- CI/CD, monitoring and infrastructure automation.
+
+EXPERIENCE EXPECTATION
+This is a senior individual-contributor role. Relevant depth and demonstrated ownership matter more than an exact job title. Candidates with fewer years may be considered only where equivalent senior-level responsibility is clearly evidenced.
+
+MANUAL REVIEW NOTES
+Assess depth, scale, ownership, design decisions and mentoring. Do not treat a list of tools without work examples as sufficient evidence of senior capability.

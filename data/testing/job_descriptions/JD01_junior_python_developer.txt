@@ -1,0 +1,34 @@
+JOB DESCRIPTION: Junior Python Developer
+Job ID: JD01
+Level: Entry-level / 0–2 years
+Department: Engineering
+
+ROLE SUMMARY
+We are seeking a Junior Python Developer to help build and maintain backend applications and REST APIs under the guidance of senior engineers.
+
+RESPONSIBILITIES
+- Develop and maintain Python application features.
+- Build or consume REST APIs using a Python framework.
+- Write and maintain SQL queries and work with relational databases.
+- Write unit tests, debug defects and participate in code reviews.
+- Use Git and contribute to technical documentation.
+
+REQUIRED CRITERIA
+- Demonstrable Python programming ability.
+- Understanding of REST API concepts.
+- Basic SQL and relational database knowledge.
+- Familiarity with Git and software testing.
+- A relevant degree, diploma or equivalent practical project experience.
+- Evidence of practical coding through projects, coursework, internship or employment.
+
+PREFERRED CRITERIA
+- Django, FastAPI or Flask.
+- PostgreSQL or MySQL.
+- pytest or another unit testing framework.
+- Exposure to deployment or Docker.
+
+EXPERIENCE EXPECTATION
+Fresh graduates and candidates with up to 2 years of relevant experience are encouraged. Do not reject a fresher solely for lacking full-time employment if practical project evidence is present.
+
+MANUAL REVIEW NOTES
+Prioritize evidence of Python, APIs, SQL and testing. Treat framework names as preferred rather than mandatory. Do not award suitability based only on keyword frequency.
